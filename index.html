@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Hotels in Ughelli</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #f5f5f5;
+            padding: 16px;
+            padding-bottom: 40px;
+        }
+        .header {
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #6200EE;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .header p {
+            color: #666;
+            font-size: 16px;
+            margin-top: 4px;
+        }
+        .search-bar {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .search-bar span {
+            font-size: 20px;
+        }
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            background: transparent;
+        }
+        .featured-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 24px 0 12px 0;
+        }
+        .featured-title h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .featured-title span {
+            color: #6200EE;
+            font-size: 14px;
+        }
+        .featured-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 4px 0 12px 0;
+            scrollbar-width: none;
+        }
+        .featured-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .featured-card {
+            min-width: 160px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .featured-img {
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .sponsored-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: #FFD700;
+            color: #000;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+        .featured-info {
+            padding: 12px;
+        }
+        .featured-info h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        .featured-info .price {
+            color: #6200EE;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .hotel-card {
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .hotel-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .featured-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #6200EE;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .hotel-details {
+            padding: 16px;
+        }
+        .hotel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .hotel-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #4CAF50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .location {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #6200EE;
+            margin: 12px 0;
+        }
+        .amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .amenity {
+            background: #f0f0f0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .btn-primary {
+            flex: 2;
+            background: #6200EE;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-whatsapp {
+            flex: 1;
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏨 Ughelli Hotels</h1>
+        <p>Find the perfect stay in Ughelli</p>
+    </div>
+
+    <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" placeholder="Search hotels...">
+    </div>
+
+    <div class="featured-title">
+        <h2>✨ Featured Hotels</h2>
+        <span>Sponsored</span>
+    </div>
+
+    <div class="featured-scroll">
+        <!-- Featured Hotel 1 (Sponsored) -->
+        <div class="featured-card">
+            <div class="featured-img" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop')">
+                <div class="sponsored-badge">SPONSORED</div>
+            </div>
+            <div class="featured-info">
+                <h3>Ughelli Grand</h3>
+                <div class="price">₦25k - ₦45k</div>
+            </div>
+        </div>
+
+        <!-- Featured Hotel 2 (Sponsored) -->
+        <div class="featured-card">
+            <div class="featured-img" style="background-image: url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&h=300&fit=crop')">
+                <div class="sponsored-badge">SPONSORED</div>
+            </div>
+            <div class="featured-info">
+                <h3>Delta Comfort</h3>
+                <div class="price">₦15k - ₦25k</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 style="margin: 24px 0 16px 0;">All Hotels</h2>
+
+    <!-- Hotel 1 -->
+    <div class="hotel-card">
+        <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=400&fit=crop')">
+            <div class="featured-badge">FEATURED</div>
+        </div>
+        <div class="hotel-details">
+            <div class="hotel-header">
+                <h3>Ughelli Grand Hotel</h3>
+                <div class="rating">⭐ 4.5 (128)</div>
+            </div>
+            <div class="location">📍 No. 15, Effurun Road, Ughelli</div>
+            <div class="amenities">
+                <span class="amenity">Free WiFi</span>
+                <span class="amenity">AC</span>
+                <span class="amenity">Restaurant</span>
+                <span class="amenity">Pool</span>
+                <span class="amenity">Bar</span>
+            </div>
+            <div class="price">₦25,000 - ₦45,000 / night</div>
+            <p style="color: #444; margin: 12px 0; line-height: 1.5;">Experience luxury at its finest in the heart of Ughelli. Our hotel offers world-class amenities and exceptional service.</p>
+            <div style="background: #f9f9f9; padding: 12px; border-radius: 12px; margin: 12px 0;">
+                <div>📞 +234 803 123 4567</div>
+            </div>
+            <div class="buttons">
+                <button class="btn-primary" onclick="bookNow('Ughelli Grand Hotel')">📅 Book Now</button>
+                <button class="btn-whatsapp" onclick="window.open('https://wa.me/2348031234567')">💬</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotel 2 -->
+    <div class="hotel-card">
+        <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=400&fit=crop')">
+            <div class="featured-badge">FEATURED</div>
+        </div>
+        <div class="hotel-details">
+            <div class="hotel-header">
+                <h3>Delta Comfort Inn</h3>
+                <div class="rating">⭐ 4.2 (89)</div>
+            </div>
+            <div class="location">📍 Km 4, Warri-Sapele Road, Ughelli</div>
+            <div class="amenities">
+                <span class="amenity">Free WiFi</span>
+                <span class="amenity">AC</span>
+                <span class="amenity">Restaurant</span>
+                <span class="amenity">Parking</span>
+            </div>
+            <div class="price">₦15,000 - ₦25,000 / night</div>
+            <p style="color: #444; margin: 12px 0; line-height: 1.5;">A comfortable and affordable hotel offering clean rooms and friendly service.</p>
+            <div style="background: #f9f9f9; padding: 12px; border-radius: 12px; margin: 12px 0;">
+                <div>📞 +234 802 345 6789</div>
+            </div>
+            <div class="buttons">
+                <button class="btn-primary" onclick="bookNow('Delta Comfort Inn')">📅 Book Now</button>
+                <button class="btn-whatsapp" onclick="window.open('https://wa.me/2348023456789')">💬</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotel 3 -->
+    <div class="hotel-card">
+        <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=400&fit=crop')">
+        </div>
+        <div class="hotel-details">
+            <div class="hotel-header">
+                <h3>Royal Palace Hotel</h3>
+                <div class="rating">⭐ 4.7 (156)</div>
+            </div>
+            <div class="location">📍 No. 8, Market Road, Ughelli</div>
+            <div class="amenities">
+                <span class="amenity">Free WiFi</span>
+                <span class="amenity">AC</span>
+                <span class="amenity">Restaurant</span>
+                <span class="amenity">Bar</span>
+                <span class="amenity">Spa</span>
+            </div>
+            <div class="price">₦20,000 - ₦35,000 / night</div>
+            <p style="color: #444; margin: 12px 0; line-height: 1.5;">Experience royal treatment at our centrally located hotel with elegant rooms.</p>
+            <div style="background: #f9f9f9; padding: 12px; border-radius: 12px; margin: 12px 0;">
+                <div>📞 +234 804 567 8901</div>
+            </div>
+            <div class="buttons">
+                <button class="btn-primary" onclick="bookNow('Royal Palace Hotel')">📅 Book Now</button>
+                <button class="btn-whatsapp" onclick="window.open('https://wa.me/2348045678901')">💬</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotel 4 -->
+    <div class="hotel-card">
+        <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=400&fit=crop')">
+        </div>
+        <div class="hotel-details">
+            <div class="hotel-header">
+                <h3>Ughelli Suites</h3>
+                <div class="rating">⭐ 4.3 (67)</div>
+            </div>
+            <div class="location">📍 No. 23, Otovwodo Road, Ughelli</div>
+            <div class="amenities">
+                <span class="amenity">Free WiFi</span>
+                <span class="amenity">AC</span>
+                <span class="amenity">Kitchenette</span>
+                <span class="amenity">Laundry</span>
+            </div>
+            <div class="price">₦18,000 - ₦30,000 / night</div>
+            <p style="color: #444; margin: 12px 0; line-height: 1.5;">Modern suites with contemporary amenities. Perfect for extended stays.</p>
+            <div style="background: #f9f9f9; padding: 12px; border-radius: 12px; margin: 12px 0;">
+                <div>📞 +234 805 678 9012</div>
+            </div>
+            <div class="buttons">
+                <button class="btn-primary" onclick="bookNow('Ughelli Suites')">📅 Book Now</button>
+                <button class="btn-whatsapp" onclick="window.open('https://wa.me/2348056789012')">💬</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotel 5 -->
+    <div class="hotel-card">
+        <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&h=400&fit=crop')">
+        </div>
+        <div class="hotel-details">
+            <div class="hotel-header">
+                <h3>Peace Haven Hotel</h3>
+                <div class="rating">⭐ 4.6 (112)</div>
+            </div>
+            <div class="location">📍 No. 5, Old Lagos Road, Ughelli</div>
+            <div class="amenities">
+                <span class="amenity">Free WiFi</span>
+                <span class="amenity">AC</span>
+                <span class="amenity">Restaurant</span>
+                <span class="amenity">Pool</span>
+                <span class="amenity">Garden</span>
+            </div>
+            <div class="price">₦22,000 - ₦38,000 / night</div>
+            <p style="color: #444; margin: 12px 0; line-height: 1.5;">A tranquil retreat away from the city's hustle and bustle.</p>
+            <div style="background: #f9f9f9; padding: 12px; border-radius: 12px; margin: 12px 0;">
+                <div>📞 +234 806 789 0123</div>
+            </div>
+            <div class="buttons">
+                <button class="btn-primary" onclick="bookNow('Peace Haven Hotel')">📅 Book Now</button>
+                <button class="btn-whatsapp" onclick="window.open('https://wa.me/2348067890123')">💬</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2024 Hotels in Ughelli | Demo Version
+    </div>
+
+    <script>
+        function bookNow(hotelName) {
+            alert(`Booking request sent to ${hotelName}!\n\nHotel will contact you shortly.`);
+        }
+        
+        // Simple search functionality
+        document.querySelector('input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const hotels = document.querySelectorAll('.hotel-card');
+            
+            hotels.forEach(hotel => {
+                const hotelName = hotel.querySelector('h3').textContent.toLowerCase();
+                if (hotelName.includes(searchTerm)) {
+                    hotel.style.display = 'block';
+                } else {
+                    hotel.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
