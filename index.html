@@ -636,9 +636,17 @@
         }
 
         function openHotelWhatsApp(number, hotelName) {
-            const message = encodeURIComponent(`Hello, I'm interested in booking a room at ${hotelName}. Do you have availability?`);
-            window.open(`https://wa.me/${number}?text=${message}`, '_blank');
-        }
+    const message = encodeURIComponent(`Hello, I'm interested in booking a room at ${hotelName}. Do you have availability?`);
+    const whatsappUrl = `whatsapp://send?phone=${number}&text=${message}`;
+    
+    // Try to open with the 'whatsapp://' scheme
+    window.location.href = whatsappUrl;
+    
+    // Optional: Fallback for if WhatsApp is not installed on the user's phone
+    setTimeout(function() {
+        window.location.href = `https://wa.me/${number}?text=${message}`;
+    }, 500);
+}
 
         function displayHotels() {
             const searchTerm = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
