@@ -390,7 +390,7 @@
         © 2025 Ughelli Hotels Directory | Book Direct on WhatsApp
     </div>
 
-    <!-- STICKY WHATSAPP BUTTON - CHANGE THE NUMBER BELOW -->
+    <!-- STICKY WHATSAPP BUTTON -->
     <div class="sticky-whatsapp">
         <div class="whatsapp-button" onclick="openPlatformWhatsApp()">
             <span>💬</span>
@@ -405,14 +405,13 @@
         // ============================================
         // 🔴🔴🔴 CHANGE THIS TO YOUR WHATSAPP NUMBER 🔴🔴🔴
         // ============================================
-        // Example: If your number is 08031234567, write it as: 2348031234567
-        // (Remove the first 0, add 234 at the beginning)
+        // IMPORTANT: Write number as 234XXXXXXXXXX (no +, no spaces, no first 0)
+        // Example: If your number is 08031234567, write it as 2348031234567
         
         const MY_WHATSAPP_NUMBER = "2349018453224";  // <--- CHANGE THIS LINE ONLY!
         
         // Update the display on the button
         function formatNumberForDisplay(number) {
-            // Convert 2348031234567 to +234 803 123 4567
             if (number.startsWith("234")) {
                 let n = number.slice(3);
                 let display = "+234 " + n.slice(0,3) + " " + n.slice(3,6) + " " + n.slice(6);
@@ -424,9 +423,15 @@
         // Set the displayed number
         document.getElementById("platformWhatsAppNumber").innerText = formatNumberForDisplay(MY_WHATSAPP_NUMBER);
         
+        // FIXED: Function for the sticky WhatsApp button
         function openPlatformWhatsApp() {
             const message = encodeURIComponent("Hello, I need help with booking a hotel in Ughelli. Can you assist me?");
-            window.open(`https://wa.me/${MY_WHATSAPP_NUMBER}?text=${message}`, '_blank');
+            // Try to open WhatsApp app directly
+            window.location.href = `whatsapp://send?phone=${MY_WHATSAPP_NUMBER}&text=${message}`;
+            // Fallback for desktop browsers
+            setTimeout(function() {
+                window.open(`https://wa.me/${MY_WHATSAPP_NUMBER}?text=${message}`, '_blank');
+            }, 500);
         }
 
         // ============================================
@@ -435,7 +440,7 @@
         const hotels = [
             {
                 id: 1,
-                name: "JETOB'S Hotels and Suits",
+                name: "JETOBS Hotels and Suits",
                 location: "Agbarha Road, Opposite Faith And Light Church",
                 description: "Experience luxury at its finest in the heart of Ughelli.",
                 priceRange: "₦35,000 - ₦70,000",
@@ -445,7 +450,7 @@
                 ratingCount: 128,
                 image: "https://i.postimg.cc/Ss7vjLmc/1.jpg",
                 amenities: ["Free WiFi", "Air Conditioning", "Restaurant", "Pool", "Bar"],
-                whatsappNumber: "2349167769867",
+                whatsappNumber: "2349167769867",  // ← MUST be 234XXXXXXXXXX format
                 whatsappDisplay: "+234 916 776 9867",
                 isFeatured: true,
                 isSponsored: true
@@ -460,7 +465,7 @@
                 priceMax: 25000,
                 rating: 4.2,
                 ratingCount: 89,
-                image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=400&fit=crop",
+                image: "https://i.postimg.cc/rFmRWY7w/profile-pix.jpg",
                 amenities: ["Free WiFi", "Air Conditioning", "Restaurant", "Parking"],
                 whatsappNumber: "2348023456789",
                 whatsappDisplay: "+234 802 345 6789",
@@ -567,7 +572,7 @@
                 whatsappNumber: "2348091234567",
                 whatsappDisplay: "+234 809 123 4567",
                 isFeatured: true,
-                isSponsored: true
+                isSponsored: false
             },
             {
                 id: 9,
@@ -606,8 +611,17 @@
         ];
 
         // ============================================
-        // DO NOT EDIT BELOW THIS LINE
+        // FIXED: WhatsApp function for hotels
         // ============================================
+        function openHotelWhatsApp(number, hotelName) {
+            const message = encodeURIComponent(`Hello, I'm interested in booking a room at ${hotelName}. Do you have availability?`);
+            // Try to open WhatsApp app directly
+            window.location.href = `whatsapp://send?phone=${number}&text=${message}`;
+            // Fallback for desktop browsers
+            setTimeout(function() {
+                window.open(`https://wa.me/${number}?text=${message}`, '_blank');
+            }, 500);
+        }
 
         function displayFeaturedHotels() {
             const featured = hotels.filter(h => h.isFeatured);
@@ -634,19 +648,6 @@
                 container.appendChild(card);
             });
         }
-
-        function openHotelWhatsApp(number, hotelName) {
-    const message = encodeURIComponent(`Hello, I'm interested in booking a room at ${hotelName}. Do you have availability?`);
-    const whatsappUrl = `whatsapp://send?phone=${number}&text=${message}`;
-    
-    // Try to open with the 'whatsapp://' scheme
-    window.location.href = whatsappUrl;
-    
-    // Optional: Fallback for if WhatsApp is not installed on the user's phone
-    setTimeout(function() {
-        window.location.href = `https://wa.me/${number}?text=${message}`;
-    }, 500);
-}
 
         function displayHotels() {
             const searchTerm = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
